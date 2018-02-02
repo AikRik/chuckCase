@@ -1,0 +1,12 @@
+html
+	body
+		content
+			h2(id="loginh2") Log in below:
+			form(id="loginForm" method="POST", action="/login" autocomplete="off")
+				input(class="loginInput" type="text" name="username" placeholder="Username") 
+				br
+				br
+				input(class="loginInput" type = "password" name="password", placeholder="Password")
+				br
+				br
+				input(id="loginSubmit" type= "submit", value="Log In")
