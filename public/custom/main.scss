@@ -1,0 +1,69 @@
+// BACKGROUND IMAGE MIXIN
+@mixin background($imgpath, $position:0 0, $repeat: repeat) {
+    background: transparent url(#{$imgpath}) $repeat $position;
+}
+
+// THEME COLORS ADJUSTMENTS
+$theme-colors: ( "warning": #d95700,
+"success": #265631);
+
+// CONTENT ADJUSTMENTS
+#alert {
+    color: white;
+}
+
+body {
+    @include background('public/images/wallpaper.jpeg');
+}
+
+// JUMBOTRON ADJUSTMENTS
+.jumbotron {
+    @include background('public/images/chuckNorrisKick.jpg');
+    height: 40%;
+    color: black;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 8px 10px #29080866;
+}
+
+// CENTERING FORMS AND BUTTON 
+#login--form,
+#signup--form,
+#timer--btn, 
+#get--joke--button{
+    text-align: center;
+}
+
+// 10 JOKES LIST CSS
+.list-group-item {
+    background-color: #ad3127 !important;
+    opacity: 0.8;
+}
+
+// FAVORITE JOKE LIST CSS
+#favorite--jokes {
+    background-color: #ad3127;
+    opacity: 0.6;
+}
+
+#favorite--jokes:hover {
+    opacity: 1;
+}
+
+#add__favorite--button {
+    opacity: 0.8;
+}
+
+// FOOTER CSS
+.spacer {
+    height: 10%;
+    width: 100%;
+}
+
+footer {
+    position: fixed;
+    bottom: 1px;
+}
+
+// BOOTSTRAP IMPORT
+@import "../../node_modules/bootstrap/scss/bootstrap";

@@ -1,149 +1,259 @@
 html(lang="en")
 	head
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
+
 		script(src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous")
+
 		script(src="http://malsup.github.com/jquery.form.js")
-		title Document
+
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
+
+		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl', crossorigin='anonymous')
+
+		title Chuck Norris FTW
 	body
-		header
-			h2 When Chuck Norris jokes, the universe explodes from laughing too much.
-		content
-			if !user	
-				h1 Log In!:)
-				include login
-				
-				h1 Sign Up!:)
-				include signup
-			else 
-				div(class="main")
-					p random joke
-						form(id="form--randomjoke" method="POST" action="/addFavorite")
-							input(type="hidden" id="id__randomjoke" name="joke")
-					button(id="joke__timer--start") Start Timer
-					button(id="button--timer__stop") Stop Timer
-
-					div(id="get--jokes")
-						button(id="joke--button") Get the Jokes
+			if !user
+				div(class="jumbotron")
+					div(class="container")
+						h1(class="display-4") Chuck Norris 
 						br
-						p(class="jokelist" id="joke--one")
-							form(id="form--j1"	method="POST" action="/addFavorite")
-								input(type="hidden" name="joke" id="id__joke--one")
-								button(class="add__favorite--button" type="submit") Add to favorites
+						h5(class="display-6")
+							|Chuck Norris does not need to create an account, he just logs in.	
 
-						p(class="jokelist" id="joke--two")
-							form(id="form--j2" method="POST" action="/addFavorite")
-								input(id="id__joke--two" type="hidden" name="joke")
-								button(class="add__favorite--button" type="sumbit") Add to favorites
+				// LOG IN AND SIGN UP FORMS
 
-						p(class="jokelist" id="joke--three")
-							form(id="form--j3" method="POST" action="/addFavorite")
-								input(id="id__joke--three" type="hidden" name="joke")
-								button(class="add__favorite--button" type="sumbit") Add to favorites
+				div(class="container")
+					div(class="row")
+						div(class="col-lg-4 offset-lg-1 col-md-6 col-sm-12")
+							
+							form(class="form-group" id="login--form" method="POST", action="/login" autocomplete="off")
+								h2 Log In!
+								label(class="label") Username
+									input(class="form-control" type="text" name="username" placeholder="Username")
+								br
+								label(class="label") Password
+									input(class="form-control" type = "password" name="password", placeholder="Password")
+								br
+								input(class="btn btn-outline-light" id="loginSubmit" type= "submit", value="Log In")
 
-						p(class="jokelist" id="joke--four")
-							form(id="form--j4" method="POST" action="/addFavorite")
-								input(type="hidden" id="id__joke--four" name="joke")
-								button(class="add__favorite--button" type="sumbit") Add to favorites
+						div(class="col-lg-5 offset-lg-1 col-md-6 col-sm-12")
+							
+							form(class="form-group" id="signup--form" method="POST", action="/signup")
+								h2(id="signup--h2") Sign Up!
+								h6(id="alert") #{alert}
+								label(class="label") Username:
+									input(class="form-control" id="username" type="text" name="username" placeholder="Username")
+								br
+								label(class="label") Password:
+									input(class="form-control" id="password" type="password" name="password" placeholder="Password")
+								br
+								button(class="btn btn-outline-light" id="signup--submit" type="submit", value= "Submit") Sign up 
+							div(class="alert alert-warning" role="alert") The Password restrictions:
+								hr
+								ul
+									li Passwords must include one increasing straight of at least three letters, like abc , cde , fgh , and so on, up to xyz. They cannot skip letters; acd doesn't count.
+									hr
+									li Passwords may not contain the letters i, O, or l, as these letters can be mistaken for other characters and are therefore confusing.
+									hr
+									li Passwords must contain at least two non-overlapping pairs of letters, like aa, bb, or cc.
+									hr
+									li Passwords cannot be longer than 32 characters.
+									hr
+									li Passwords can only contain lower case alphabetic characters.
+								br
+			else 
+				div(class="jumbotron jumbotron-fluid")
+					div(class="container")
+						h1(class="display-4") Chuck Norris 
+						br
+						h5(class="display-6")
+							|The last time Chuck Norris made a joke, the Big Bang occured.
 
-						p(class="jokelist" id="joke--five")
-							form(id="form--j5" method="POST" action="/addFavorite")
-								input(type="hidden" id="id__joke--five" name="joke")
-								button(class="add__favorite--button" type="sumbit") Add to favorites
+				// ON/OF BUTTON FOR TIMER
 
-						p(class="jokelist" id="joke--six")
-							form(id="form--j6" method="POST" action="/addFavorite")
-								input(type="hidden" id="id__joke--six" name="joke")
-								button(class="add__favorite--button" type="sumbit") Add to favorites
+				div(class="container")
+					div(class="row")
+						div(class="col" id="timer--btn")
+							p
+								form(id="form--randomjoke" method="POST" action="/addFavorite")
+									input(type="hidden" id="id__randomjoke" name="joke")
+							div(class="btn-group" role="group")
+								button(class="btn btn-secondary" id="joke__timer--start") Start Timer
+								button(class="btn btn-secondary" id="button--timer__stop") Stop Timer
+							br
+							br
 
-						p(class="jokelist" id="joke--seven")
-							form(id="form--j7" method="POST" action="/addFavorite")
-								input(type="hidden" id="id__joke--seven" name="joke")
-								button(class="add__favorite--button" type="sumbit") Add to favorites
+				// BUTTON TO GET 10 JOKES AND THE LIST OF JOKES 
 
-						p(class="jokelist" id="joke--eight")
-							form(id="form--j8" method="POST" action="/addFavorite")
-								input(type="hidden" id="id__joke--eight" name="joke")
-								button(class="add__favorite--button" type="sumbit") Add to favorites
+				div(class="container")
+					div(class="row")
+						div(class="col" id="get--joke--button")
+							button(class="btn btn-success") Get the Jokes	
+					br
+					div(class="row" id="get--jokes")
+						div(class="col-lg-8 col-md-8 col-sm-8")
+							div(id="listOfJokes")
+								li(class="list-group-item" id="joke--one")
+								form(id="form--j1"	method="POST" action="/addFavorite")
+									input(type="hidden" name="joke" id="id__joke--one")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="submit") Add to favorites
 
-						p(class="jokelist" id="joke--nine")
-							form(id="form--j9" method="POST" action="/addFavorite")
-								input(type="hidden" id="id__joke--nine" name="joke")
-								button(class="add__favorite--button" type="sumbit") Add to favorites
+								li(class="list-group-item" id="joke--two")
+								form(id="form--j2" method="POST" action="/addFavorite")
+									input(id="id__joke--two" type="hidden" name="joke")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="sumbit") Add to favorites
 
-						p(class="jokelist" id="joke--ten")
-							form(id="form--j10" method="POST" action="/addFavorite")
-								input(type="hidden" id="id__joke--ten" name="joke")
-								button(class="add__favorite--button" type="sumbit") Add to favorites
-					if favoriteJokes
-						div(id="favorite--jokes")
-							h1 Favorite Jokes: #{error}
+								li(class="list-group-item" id="joke--three")
+								form(id="form--j3" method="POST" action="/addFavorite")
+									input(id="id__joke--three" type="hidden" name="joke")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="sumbit") Add to favorites
+
+								li(class="list-group-item" id="joke--four")
+								form(id="form--j4" method="POST" action="/addFavorite")
+									input(type="hidden" id="id__joke--four" name="joke")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="sumbit") Add to favorites
+
+								li(class="list-group-item" id="joke--five")
+								form(id="form--j5" method="POST" action="/addFavorite")
+									input(type="hidden" id="id__joke--five" name="joke")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="sumbit") Add to favorites
+
+								li(class="list-group-item" id="joke--six")
+								form(id="form--j6" method="POST" action="/addFavorite")
+									input(type="hidden" id="id__joke--six" name="joke")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="sumbit") Add to favorites
+
+								li(class="list-group-item" id="joke--seven")
+								form(id="form--j7" method="POST" action="/addFavorite")
+									input(type="hidden" id="id__joke--seven" name="joke")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="sumbit") Add to favorites
+
+								li(class="list-group-item" id="joke--eight")
+								form(id="form--j8" method="POST" action="/addFavorite")
+									input(type="hidden" id="id__joke--eight" name="joke")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="sumbit") Add to favorites
+
+								li(class="list-group-item" id="joke--nine")
+								form(id="form--j9" method="POST" action="/addFavorite")
+									input(type="hidden" id="id__joke--nine" name="joke")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="sumbit") Add to favorites
+
+								li(class="list-group-item" id="joke--ten")
+								form(id="form--j10" method="POST" action="/addFavorite")
+									input(type="hidden" id="id__joke--ten" name="joke")
+									button(class="btn btn-sm btn-outline-warning" id="add__favorite--button" type="sumbit") Add to favorites
+						if favoriteJokes
+
+						//THE FAVORITE JOKES LIST
+
+						div(class="col-lg-4 col-md-4 col-sm-4" id="favorite--jokes")
+							h1 Favorite Jokes: 
+							alert(id="alert") #{error}
 							each item in favoriteJokes
+								h5(id="favoritelist--img")
+									span(style='padding-right:3px; padding-top: 3px; display:inline-block;')
+										img(id="chuckApproved" src='public/images/chuckApproved.png')
+								form(id="delete--joke" method= "POST" action="/deleteJoke")
 								li #{item.jokes}
 								form(id="delete--joke" method= "POST" action="/deleteJoke")
 									input(type="hidden" name="jokeId" value= item.id)
-									button(type="submit") Delete
-		if user
-			footer
-				a(href="./logout") Log Out
+									button(class="btn btn-sm btn-outline-warning" type="submit") Delete
+								hr
+				div(class="spacer")
+				footer
+					a(class="btn btn-sm btn-outline-light" href="./logout") Log Out
 	style
-		include ../public/custom/index.css
+		include ../public/custom/main.css
 
 	script.
 		$(document).ready(function() {
-				$("#joke--button").click(function(e) {
-					console.log("e.target", e.target.value)
-					var suggestion = {input: e.target.value}
-					$.ajax({
-						url: "http://api.icndb.com/jokes/random/10",
-						data: "",
-						datatype: "json",
-						crossDomain: true,
-						type: "GET",						
-						success: function(data) {
-								$("#joke--one").html("Chuck Joke 1: " + data.value[0].joke)
-								$("#form--j1").append('<input type="hidden" id="id__joke--one" name="joke">');
-								$("#id__joke--one").val(`${data.value[0].joke}`)
+		// SIGN UP FORM VALIDATION
+			$("#signup--form").submit(function(event) {
+				var pass = $("#password").val()
 
-								$("#joke--two").html("Chuck Joke 2: " + data.value[1].joke)
-								$("#form--j2").append('<input type="hidden" id="id__joke--two" name="joke">');
-								$("#id__joke--two").val(`${data.value[1].joke}`)
+				if(/[A-Z]/.test(pass) == true){
+				event.preventDefault()
+					alert("Your password can only contain lower case alphabetic characters.")
+				} 
+				else if(/(.)\1/.test(pass) == false){
+					alert("Your password must contain at least two non-overlapping pairs of letters, like aa, bb, or cc.")
+				}
+				else if(pass.indexOf("i") > -1 || pass.indexOf("o") > -1 || pass.indexOf("l") > -1){
+					event.preventDefault()
+					alert("Your password may not contain the letters i, O, or l.")         
+				}
+				else if(pass.length > 32 ){
+					event.preventDefault()
+					alert("Your password cannot be longer than 32 characters.")
+				} 
+				else if (pass.indexOf("abc") > -1 == false  && pass.indexOf("bcd") > -1 == false && pass.indexOf("cde") > -1 == false && pass.indexOf("def") > -1 == false && pass.indexOf("efg") > -1 == false  && pass.indexOf("fgh")  > -1 == false && pass.indexOf("ghi")  > -1 == false  && pass.indexOf("hij")  > -1 == false  && pass.indexOf("ijk")  > -1 == false  && pass.indexOf("jkl")  > -1 == false  && pass.indexOf("klm")  > -1 == false  && pass.indexOf("lmn")  > -1 == false  && pass.indexOf("mno")  > -1 == false  && pass.indexOf("nop")  > -1 == false  && pass.indexOf("opq")  > -1 == false  && pass.indexOf("pqr")  > -1 == false  && pass.indexOf("qrs")  > -1 == false  && pass.indexOf("rst")  > -1 == false  && pass.indexOf("stu")  > -1 == false  && pass.indexOf("tuv")  > -1 == false  && pass.indexOf("uvw")  > -1 == false  && pass.indexOf("vwx")  > -1 == false  && pass.indexOf("wxy")  > -1 == false  && pass.indexOf("xyz")  > -1 == false){
+					event.preventDefault()
+					alert("Your password must include one increasing straight of at least three letters, like abc.")
+				}
+			});
+			// HIDE LIST OF JOKES
+			$("#listOfJokes").hide()
+			// AJAX GET 10 JOKES FROM THE API
+			$("#get--joke--button").click(function(e) {
+				console.log("e.target", e.target.value)
+				var suggestion = {input: e.target.value}
+				$.ajax({
+					url: "http://api.icndb.com/jokes/random/10",
+					data: "",
+					datatype: "json",
+					crossDomain: true,
+					type: "GET",						
+					success: function(data) {
+						$("#listOfJokes").show()
 
-								$("#joke--three").html("Chuck Joke 3: " + data.value[2].joke)
-								$("#form--j3").append('<input type="hidden" id="id__joke--three" name="joke">');
-								$("#id__joke--three").val(`${data.value[2].joke}`)
+						$("#joke--one").html("Chuck Joke 1: " + data.value[0].joke)
+						$("#form--j1").append('<input type="hidden" id="id__joke--one" name="joke">');
+						$("#id__joke--one").val(`${data.value[0].joke}`)
 
-								$("#joke--four").html("Chuck Joke 4: " + data.value[3].joke)
-								$("#form--j4").append('<input type="hidden" id="id__joke--four" name="joke">');
-								$("#id__joke--four").val(`${data.value[3].joke}`)
+						$("#joke--two").html("Chuck Joke 2: " + data.value[1].joke)
+						$("#form--j2").append('<input type="hidden" id="id__joke--two" name="joke">');
+						$("#id__joke--two").val(`${data.value[1].joke}`)
 
-								$("#joke--five").html("Chuck Joke 5: " + data.value[4].joke)	
-								$("#form--j5").append('<input type="hidden" id="id__joke--five" name="joke">');
-								$("#id__joke--five").val(`${data.value[4].joke}`)
+						$("#joke--three").html("Chuck Joke 3: " + data.value[2].joke)
+						$("#form--j3").append('<input type="hidden" id="id__joke--three" name="joke">');
+						$("#id__joke--three").val(`${data.value[2].joke}`)
 
-								$("#joke--six").html("Chuck Joke 6: " + data.value[5].joke)
-								$("#form--j6").append('<input type="hidden" id="id__joke--six" name="joke">');
-								$("#id__joke--six").val(`${data.value[5].joke}`)
+						$("#joke--four").html("Chuck Joke 4: " + data.value[3].joke)
+						$("#form--j4").append('<input type="hidden" id="id__joke--four" name="joke">');
+						$("#id__joke--four").val(`${data.value[3].joke}`)
 
-								$("#joke--seven").html("Chuck Joke 7: " + data.value[6].joke)
-								$("#form--j7").append('<input type="hidden" id="id__joke--seven" name="joke">');
-								$("#id__joke--six").val(`${data.value[6].joke}`)								
+						$("#joke--five").html("Chuck Joke 5: " + data.value[4].joke)	
+						$("#form--j5").append('<input type="hidden" id="id__joke--five" name="joke">');
+						$("#id__joke--five").val(`${data.value[4].joke}`)
 
-								$("#joke--eight").html("Chuck Joke 8: " + data.value[7].joke)
-								$("#form--j8").append('<input type="hidden" id="id__joke--eight" name="joke">');
-								$("#id__joke--eight").val(`${data.value[7].joke}`)								
+						$("#joke--six").html("Chuck Joke 6: " + data.value[5].joke)
+						$("#form--j6").append('<input type="hidden" id="id__joke--six" name="joke">');
+						$("#id__joke--six").val(`${data.value[5].joke}`)
 
-								$("#joke--nine").html("Chuck Joke 9: " + data.value[8].joke)
-								$("#form--j9").append('<input type="hidden" id="id__joke--nine" name="joke">');
-								$("#id__joke--nine").val(`${data.value[8].joke}`)								
+						$("#joke--seven").html("Chuck Joke 7: " + data.value[6].joke)
+						$("#form--j7").append('<input type="hidden" id="id__joke--seven" name="joke">');
+						$("#id__joke--six").val(`${data.value[6].joke}`)								
 
-								$("#joke--ten").html("Chuck Joke 10: " + data.value[9].joke)
-								$("#form--j10").append('<input type="hidden" id="id__joke--ten" name="joke">');
-								$("#id__joke--ten").val(`${data.value[9].joke}`)									
-						},
-						error: function(err) {
-							console.log(err)
-						} 
-					})
-				});
+						$("#joke--eight").html("Chuck Joke 8: " + data.value[7].joke)
+						$("#form--j8").append('<input type="hidden" id="id__joke--eight" name="joke">');
+						$("#id__joke--eight").val(`${data.value[7].joke}`)								
+						$("#joke--nine").html("Chuck Joke 9: " + data.value[8].joke)
+						$("#form--j9").append('<input type="hidden" id="id__joke--nine" name="joke">');
+						$("#id__joke--nine").val(`${data.value[8].joke}`)								
+
+						$("#joke--ten").html("Chuck Joke 10: " + data.value[9].joke)
+						$("#form--j10").append('<input type="hidden" id="id__joke--ten" name="joke">');
+						$("#id__joke--ten").val(`${data.value[9].joke}`)			
+					},
+					error: function(err) {
+						console.log(err)
+					} 
+				})
+			});
+			// AJAX GET 1 JOKE FROM API AND TIMER
 		    $("#joke__timer--start").click(function(e){
 		    $("#form--randomjoke").ajaxForm(function(e){
 		        jokeAddRandom();
